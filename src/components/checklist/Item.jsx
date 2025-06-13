@@ -1,5 +1,5 @@
+//  components/checklist/Item.jsx
 import React from 'react';
-import {RECIPE} from '../../constants/app/appConstants';
 import {
   Text,
   Pressable,
@@ -7,7 +7,8 @@ import {
   View,
 
 } from 'react-native';
-const Item = ({item, styles, stock,isDisabled,setChecklist}) => {
+import {CheckListItemStyles as styles} from '../../styles/Styles';
+const Item = ({item, stock,isDisabled,setChecklist,recipe}) => {
 
   const {width, fontScale} = useWindowDimensions();
   const baseFont = width >= 600 ? 20 : 16;
@@ -108,9 +109,9 @@ const Item = ({item, styles, stock,isDisabled,setChecklist}) => {
         {item.name}
         {item.isStockItem && (
           <Text style={styles.quantityText}>
-            {` (Need: ${RECIPE[item.name] || 0}, Have: ${
-              stock[item.name]?.quantity || 0
-            })`}
+           {` (Need: ${recipe[item.name] || 0}, Have: ${
+          (stock[item.name]?.quantity.toFixed(3) ?? 0) // Use nullish coalescing
+})`}
           </Text>
         )}
       </Text>

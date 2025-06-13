@@ -1,7 +1,9 @@
-import {RECIPE} from '../../constants/app/appConstants';
+// utils/checklist.js
+import {DEFAULT_RECIPE} from '../../constants/app/appConstants';
 import {NON_STOCK_ITEMS} from '../../constants/app/appConstants';
 
 export const generateChecklistItems = stock => {
+  stock = stock || {};
   const baseItems = [
     // Always include the non-stock items first
     {id: 1, name: 'Clean Kitchen', status: 'incomplete', isStockItem: false},
@@ -9,12 +11,12 @@ export const generateChecklistItems = stock => {
 
   // Add stock items from RECIPE
   let id = 2;
-  Object.keys(RECIPE).forEach(stockName => {
+  Object.keys(DEFAULT_RECIPE).forEach(stockName => {
     if (NON_STOCK_ITEMS.includes(stockName)) {
       return;
     }
 
-    const requiredQuantity = RECIPE[stockName];
+    const requiredQuantity = DEFAULT_RECIPE[stockName];
     const stockQuantity = stock[stockName]?.quantity || 0;
     const hasEnough = stockQuantity >= requiredQuantity;
 

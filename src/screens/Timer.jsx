@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import TimerControls from '../components/timer/TimerControls';
 import AlarmControls from '../components/timer/AlarmControls';
 import TimerComponent from '../components/timer/TimerComponent';
-import {GlobalStyles as styles} from '../styles/Styles';
+import {GlobalStyles} from '../styles/Styles';
 const AlarmTimer = () => {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -12,7 +12,7 @@ const AlarmTimer = () => {
   const alarmTriggered = useRef(false);
 
   return (
-    <View style={styles.container}>
+    <View style={GlobalStyles.appContainer}>
       <TimerComponent
         isRunning={isRunning}
         alarmTriggered={alarmTriggered}

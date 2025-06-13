@@ -14,6 +14,8 @@ import {
   stopAlarmSound,
 } from '../../utils/timer/Sound';
 import {TimerStyles as styles} from '../../styles/Styles';
+import {Theme} from '../../styles/Theme';
+
 const TimerComponent = ({
   isRunning,
   alarmTriggered,
@@ -25,6 +27,7 @@ const TimerComponent = ({
   setSeconds,
 }) => {
   const rotation = React.useRef(new Animated.Value(0)).current;
+  const pulseAnim = React.useRef(new Animated.Value(1)).current;
 
   // Timer tick
   React.useEffect(() => {
@@ -57,9 +60,10 @@ const TimerComponent = ({
     return () => clearInterval(interval);
   }, [isRunning, alarmMinutes, alarmTriggered, setSeconds]);
 
-  // Rotation animation
+  // Rotation and pulse animations
   React.useEffect(() => {
     if (isRunning) {
+      // Rotation animation
       Animated.loop(
         Animated.timing(rotation, {
           toValue: 1,
@@ -68,15 +72,40 @@ const TimerComponent = ({
           useNativeDriver: true,
         }),
       ).start();
+
+      // Pulse animation
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(pulseAnim, {
+            toValue: 1.1,
+            duration: 1000,
+            easing: Easing.out(Easing.ease),
+            useNativeDriver: true,
+          }),
+          Animated.timing(pulseAnim, {
+            toValue: 1,
+            duration: 1000,
+            easing: Easing.out(Easing.ease),
+            useNativeDriver: true,
+          }),
+        ]),
+      ).start();
     } else {
       rotation.stopAnimation();
+      pulseAnim.stopAnimation();
       rotation.setValue(0);
+      pulseAnim.setValue(1);
     }
-  }, [isRunning, rotation]);
+  }, [isRunning, rotation, pulseAnim]);
 
   const rotateInterpolation = rotation.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
+  });
+
+  const pulseInterpolation = pulseAnim.interpolate({
+    inputRange: [1, 1.1],
+    outputRange: [1, 1.1],
   });
 
   const formatTime = s => {
@@ -88,15 +117,27 @@ const TimerComponent = ({
   };
 
   const circleStyle = {
-    transform: [{rotate: rotateInterpolation}],
-    borderColor: alarmMinutes ? '#FF6D00' : '#FFD1DC',
+    transform: [{rotate: rotateInterpolation}, {scale: pulseInterpolation}],
+    borderWidth: 6,
+    borderLeftColor: Theme.colors.pastelBlue,
+    borderTopColor: Theme.colors.pastelGreen,
+    borderRightColor: Theme.colors.pastelPink,
+    borderBottomColor: Theme.colors.pastelYellow,
+    backgroundColor: Theme.colors.darkBackground,
+    shadowColor: Theme.colors.pastelBlue,
+    shadowOffset: {width: 0, height: 0},
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+    elevation: 10,
   };
+
   return (
     <View style={styles.timerContainer}>
       <Animated.View style={[styles.circleProgress, circleStyle]}>
-        <Text style={styles.timerText}>{formatTime(seconds)}</Text>
+        {/* Position marker for rotation */}
+        <View style={styles.positionMarker} />
       </Animated.View>
-
+      <Text style={styles.timerText}>{formatTime(seconds)}</Text>
       {alarmMinutes ? (
         <View style={styles.alarmInfo}>
           <Text style={styles.targetText}>
@@ -107,7 +148,11 @@ const TimerComponent = ({
             onPress={() =>
               removeAlarm(setAlarmMinutes, setAlarmTime, alarmTriggered)
             }>
-            <Ionicons name="close-circle" size={24} color="#F44336" />
+            <Ionicons
+              name="close-circle"
+              size={Theme.typography.icon}
+              color={Theme.colors.textLight}
+            />
           </TouchableOpacity>
         </View>
       ) : (

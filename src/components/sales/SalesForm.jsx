@@ -5,14 +5,51 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  Alert,
 } from 'react-native';
+import {Storage} from '../../storage/Storage';
+import {salesStyles as styles} from '../../styles/Styles';
+import {DEFAULT_SALE, SALES_DATA_KEY} from '../../constants/app/appConstants';
 
-const SalesForm = ({styles, setNewSale, newSale, recordSale}) => {
+const SalesForm = ({sales, setSales}) => {
+  const [newSale, setNewSale] = React.useState(DEFAULT_SALE);
+  const recordSale = async () => {
+    if (!newSale.quantity || !newSale.price) {
+      Alert.alert('Error', 'Please enter quantity and price');
+      return;
+    }
+
+    const total =
+      parseFloat(newSale.price) * parseInt(newSale.quantity, 10) +
+      (newSale.deliveryOption === 'self'
+        ? 0
+        : parseFloat(newSale.deliveryCost || '0'));
+
+    const sale = {
+      ...newSale,
+      id: Date.now(),
+      date: new Date().toLocaleString(),
+      total: total.toFixed(2),
+    };
+
+    const updatedSales = [...sales, sale];
+    setSales(updatedSales);
+    Storage.setArray(SALES_DATA_KEY, updatedSales);
+
+    setNewSale({
+      quantity: '',
+      price: '',
+      deliveryCost: '',
+      deliveryOption: 'self',
+      customer: '',
+    });
+
+    Alert.alert('Success', 'Sale recorded successfully');
+  };
   return (
     <ScrollView
       contentContainerStyle={styles.formContainer}
       keyboardShouldPersistTaps="handled">
-      <Text style={styles.sectionTitle}>New Sale</Text>
 
       <View style={styles.inputGroup}>
         <Text style={styles.inputLabel}>Quantity</Text>

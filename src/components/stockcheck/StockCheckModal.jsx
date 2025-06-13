@@ -1,19 +1,67 @@
 import React, {useState} from 'react';
-import {Modal, View, Text, TextInput, Button, StyleSheet} from 'react-native';
+import {Modal, View, Text, TextInput, Button} from 'react-native';
+import {stockCheckStyles as styles} from '../../styles/Styles';
+import {DEFAULT_RECIPE} from '../../constants/app/appConstants';
 
 const StockCheckModal = ({
   visible,
-  maxPortions,
   onCancel,
-  onConfirm,
-  defaultValue,
+  setShowModal,
+  stock,
+  setStock,
 }) => {
-  const [input, setInput] = useState(defaultValue ? String(defaultValue) : '');
-
+  const maxPortions = React.useMemo(() => {
+    const calculateMaxPortions = () => {
+      try {
+        const portions = Object.entries(DEFAULT_RECIPE).map(
+          ([ingredient, amount]) => {
+            if (!stock[ingredient] || amount === 0) {
+              return Infinity;
+            }
+            return Math.floor(stock[ingredient].quantity / amount);
+          },
+        );
+        return Math.min(...portions);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    calculateMaxPortions(stock);
+  }, [stock]);
+  const [customPortions, setCustomPortions] = useState('');
+  const [input, setInput] = useState(
+    customPortions ? String(customPortions) : '',
+  );
+  const UsePortions = pns => {
+    try {
+      const newStock = {...stock};
+      Object.entries(DEFAULT_RECIPE).forEach(([ingredient, amount]) => {
+        if (newStock[ingredient]) {
+          newStock[ingredient].quantity = Math.max(
+            0,
+            newStock[ingredient].quantity - amount * pns,
+          );
+        }
+      });
+      newStock.preMixedFrozen.quantity += pns;
+      setStock(newStock);
+      setCustomPortions('');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const onConfirm = pns => {
+    UsePortions(pns);
+    setShowModal(false);
+  };
   const handleMake = () => {
-    const portions = parseInt(input, 10);
-    if (portions > 0 && portions <= maxPortions) {
-      onConfirm(portions);
+    try {
+      const pns = parseInt(input, 10);
+      if (pns > 0 && pns <= maxPortions) {
+        onConfirm(pns);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -46,45 +94,5 @@ const StockCheckModal = ({
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modal: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 8,
-    width: '80%',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  info: {
-    fontSize: 14,
-    marginBottom: 15,
-    color: 'gray',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 15,
-  },
-  buttonRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-});
 
 export default StockCheckModal;

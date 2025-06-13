@@ -1,24 +1,21 @@
+// screens/Checklist.jsx
 import React, {useState} from 'react';
-import {Animated} from 'react-native';
 import {Storage} from '../storage/Storage';
-import { DEFAULT_STOCK} from '../constants/app/appConstants';
-import {STOCK_DATA_KEY} from '../constants/app/appConstants';
+import {DEFAULT_STOCK,DEFAULT_RECIPE} from '../constants/app/appConstants';
+import {STOCK_DATA_KEY,RECIPE_DATA_KEY} from '../constants/app/appConstants';
 import ListViewer from '../components/checklist/ListViewer';
-import {generateChecklistItems} from '../utils/checklist/checklist';
+
 
 const Checklist = () => {
   const [stock, setStock] = useState(() => {
     const savedStock = Storage.getObject(STOCK_DATA_KEY);
-    return savedStock || DEFAULT_STOCK; // Use saved data if exists
+    return savedStock || DEFAULT_STOCK || {}; 
   });
- 
-
-  return (
-    <ListViewer
-
-      stock={stock}
-    />
-  );
+  const [recipe, setRecipe] = useState(() => {
+    const savedRecipe = Storage.getObject(RECIPE_DATA_KEY);
+    return savedRecipe || DEFAULT_RECIPE || {};
+  });
+  return <ListViewer stock={stock} recipe={recipe} />;
 };
 
 export default Checklist;

@@ -1,11 +1,9 @@
 import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
-import {
-  stopAlarmSound,
-} from '../../utils/timer/Sound';
-import { TimerControlStyles as styles } from '../../styles/Styles';
-
+import {stopAlarmSound} from '../../utils/timer/Sound';
+import {TimerControlStyles as styles} from '../../styles/Styles';
+import {Theme} from '../../styles/Theme';
 const TimerControls = ({
   setIsRunning,
   alarmTriggered,
@@ -37,20 +35,28 @@ const TimerControls = ({
           isRunning ? styles.pauseButton : styles.startButton,
         ]}
         onPress={toggleTimer}>
-        <Ionicons name={isRunning ? 'pause' : 'play'} size={24} color="white" />
+        <Ionicons name={isRunning ? 'pause' : 'play'} size={Theme.typography.icon} color={Theme.colors.textLight} />
       </TouchableOpacity>
 
       <TouchableOpacity
         style={[styles.controlButton, styles.resetButton]}
         onPress={resetTimer}>
-        <Ionicons name="stop" size={24} color="white" />
+        <Ionicons
+          name="stop"
+          size={Theme.typography.largeTitle}
+          color={Theme.colors.pastelMint}
+        />
       </TouchableOpacity>
 
       {!isRunning && seconds > 0 && (
         <TouchableOpacity
           style={[styles.controlButton, styles.goAgainButton]}
           onPress={goAgain}>
-          <Ionicons name="refresh" size={24} color="white" />
+          <Ionicons
+            name="refresh"
+            size={Theme.typography.largeTitle}
+            color={Theme.colors.textLight}
+          />
         </TouchableOpacity>
       )}
     </View>

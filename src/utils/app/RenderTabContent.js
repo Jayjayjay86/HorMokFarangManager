@@ -1,13 +1,13 @@
-import Timer from '../../components/Timer';
-import StockCheck from '../../components/StockCheck';
-import SalesSection from '../../components/SalesSection';
-import Checklist from '../../components/Checklist';
+import Timer from '../../screens/Timer';
+import SalesSection from '../../screens/SalesSection';
+import StockCheck from '../../screens/StockCheck';
+import Checklist from '../../screens/Checklist';
+import RecipeCalculator from '../../screens/RecipeCalculator';
 
 export const renderTabContent = (activeTab) => {
     switch (activeTab) {
       case 'timer':
         return <Timer />;
-
       case 'stock':
         return <StockCheck />;
 
@@ -16,7 +16,8 @@ export const renderTabContent = (activeTab) => {
 
       case 'checklist':
         return <Checklist />;
-
+      case 'recipe':
+        return <RecipeCalculator />;
       default:
         return null;
     }

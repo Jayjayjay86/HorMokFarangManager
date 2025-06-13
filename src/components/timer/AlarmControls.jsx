@@ -4,10 +4,10 @@ import {
   TouchableOpacity,
   TextInput,
   Keyboard,
-  StyleSheet,
 } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { AlarmControlStyles as styles } from '../../styles/Styles';
+import { Theme } from '../../styles/Theme';
 const AlarmControls = ({
   alarmMinutes,
   setAlarmMinutes,
@@ -49,7 +49,7 @@ const AlarmControls = ({
           <TouchableOpacity
             style={[styles.controlButton, styles.setButton]}
             onPress={setAlarm}>
-            <Ionicons name="alarm" size={24} color="white" />
+            <Ionicons name="alarm" size={Theme.typography.icon} color={Theme.colors.textLight} />
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.controlButton, styles.cancelButton]}
@@ -57,7 +57,7 @@ const AlarmControls = ({
               setShowInput(false);
               Keyboard.dismiss();
             }}>
-            <Ionicons name="close" size={24} color="white" />
+            <Ionicons name="close" size={Theme.typography.icon} color={Theme.colors.textLight} />
           </TouchableOpacity>
         </View>
       ) : (
@@ -66,8 +66,8 @@ const AlarmControls = ({
           onPress={() => setShowInput(true)}>
           <Ionicons
             name={alarmMinutes ? 'alarm' : 'alarm-outline'}
-            size={24}
-            color="white"
+            size={Theme.typography.icon}
+            color={Theme.colors.textLight}
           />
         </TouchableOpacity>
       )}
