@@ -55,6 +55,7 @@ const StockCheck = () => {
       <Header
         currentPerPortionAmount={currentPerPortionAmount}
         stock={stock}
+        setStock={setStock}
         setShowModal={setShowModal}
         recipe={recipe}
       />

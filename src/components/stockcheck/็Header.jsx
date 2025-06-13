@@ -9,6 +9,7 @@ const Header = ({
   setShowModal,
   currentPerPortionAmount,
   stock,
+  setStock,
 }) => {
   const calculateMaxPortions = () => {
     const portions = Object.entries(recipe).map(([ingredient, amount]) => {
@@ -57,7 +58,7 @@ const Header = ({
           <Text style={styles.frozenLabel}>Frozen:</Text>
           <View style={styles.frozenControls}>
             <TouchableOpacity
-              onPress={() => updateStock('preMixedFrozen', true)}>
+              onPress={() => updateStock('preMixedFrozen', true, setStock)}>
               <Text style={styles.frozenArrow}>＋</Text>
             </TouchableOpacity>
           </View>
@@ -67,7 +68,7 @@ const Header = ({
           </Text>
           <View style={styles.frozenControls}>
             <TouchableOpacity
-              onPress={() => updateStock('preMixedFrozen', false)}>
+              onPress={() => updateStock('preMixedFrozen', false, setStock)}>
               <Text style={styles.frozenArrow}>−</Text>
             </TouchableOpacity>
           </View>

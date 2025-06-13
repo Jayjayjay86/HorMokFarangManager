@@ -23,7 +23,19 @@ export const appStyles = StyleSheet.create({
     paddingVertical: Theme.spacing.xxs,
     justifyContent: 'space-evenly',
     elevation: 3,
+  },
+  logoBorderRed: {
+    borderColor: Theme.colors.primary,
+    borderWidth: Theme.borders.width.thickest,
+    width: '100%',
+  },
+  logoBorderBlue: {
+    borderColor: Theme.colors.paleBlue,
+    borderWidth: Theme.borders.width.thickest,
+    margin: Theme.spacing.xs,
+  
     flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
   headerLeft: {
     paddingVertical: Theme.spacing.md,
@@ -40,14 +52,14 @@ export const appStyles = StyleSheet.create({
   },
   headerTitle: {
     color: Theme.colors.primary,
-    fontSize: Theme.typography.display,
+    fontSize: Theme.typography.headingTitle,
     fontWeight: 'bold',
     textAlign: 'center',
     fontFamily: 'System',
   },
   headerTitleBlue: {
     color: Theme.colors.secondary,
-    fontSize: Theme.typography.display,
+    fontSize: Theme.typography.headingTitle,
     fontWeight: 'bold',
     textAlign: 'center',
     fontFamily: 'openSans',
@@ -126,12 +138,11 @@ export const TimerStyles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: Theme.colors.pastelRed,
     shadowColor: Theme.colors.pastelRed,
-    shadowOffset: { width: 0, height: 0 },
+    shadowOffset: {width: 0, height: 0},
     shadowOpacity: 1,
     shadowRadius: 5,
     elevation: 5,
   },
-
 });
 
 export const TimerControlStyles = StyleSheet.create({
@@ -311,7 +322,7 @@ export const CheckListItemStyles = StyleSheet.create({
 export const recipeCalculatorStyles = StyleSheet.create({
   container: {
     width: '100%',
-    justifyContent: 'center',
+    marginTop:Theme.spacing.xxxxl,
     flex: Theme.flex.on,
     backgroundColor: Theme.colors.background,
     padding: Theme.spacing.sm,
@@ -464,11 +475,12 @@ export const recipeCalculatorStyles = StyleSheet.create({
   calcTextButton: {
     textAlign: 'center',
     fontSize: Theme.typography.largeTitle,
-    margin: Theme.spacing.md,
+    margin: Theme.spacing.xl,
     color: Theme.colors.text,
+    padding: Theme.spacing.lg,
     borderWidth: Theme.borders.width.thin,
     borderRadius: Theme.borders.radius.md,
-    backgroundColor: Theme.colors.pastelBlue,
+    backgroundColor: Theme.colors.pastelCream,
   },
   portionsInput: {
     flex: Theme.flex.over,

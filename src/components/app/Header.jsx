@@ -5,13 +5,17 @@ const Header = () => {
   return (
     <>
       <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <Text style={styles.headerTitle}>Hor</Text>
-          <Text style={styles.headerTitle}>-</Text>
-          <Text style={styles.headerTitle}>Mok </Text>
-        </View>
-        <View style={styles.headerRight}>
-          <Text style={styles.headerTitleBlue}>Farang</Text>
+        <View style={styles.logoBorderRed}>
+          <View style={styles.logoBorderBlue}>
+            <View style={styles.headerLeft}>
+              <Text style={styles.headerTitle}>Hor</Text>
+              <Text style={styles.headerTitle}>-</Text>
+              <Text style={styles.headerTitle}>Mok </Text>
+            </View>
+            <View style={styles.headerRight}>
+              <Text style={styles.headerTitleBlue}>Farang</Text>
+            </View>
+          </View>
         </View>
       </View>
     </>

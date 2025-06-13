@@ -82,6 +82,7 @@ export const Theme = {
     xl: 18,
     xxl: 24,
     xxxl: 32,
+    xxxxl: 45,
   },
 
   typography: {
@@ -93,6 +94,7 @@ export const Theme = {
     title: 20,
     largeTitle: 22,
     icon: 24,
+    headingTitle: 38,
     display: 42,
   },
   gears: {
@@ -110,6 +112,7 @@ export const Theme = {
       thin: StyleSheet.hairlineWidth,
       regular: 1,
       thick: 2,
+      thickest:3,
     },
     radius: {
       sm: 4,
