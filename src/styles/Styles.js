@@ -327,6 +327,24 @@ export const recipeCalculatorStyles = StyleSheet.create({
     backgroundColor: Theme.colors.background,
     padding: Theme.spacing.sm,
   },
+  backupText: {
+  fontSize: 16,
+  color: '#333',
+  marginBottom: 15,
+  textAlign: 'center',
+},
+backupSuccess: {
+  fontSize: 14,
+  color: 'green',
+  marginTop: 10,
+  textAlign: 'center',
+},
+backupError: {
+  fontSize: 14,
+  color: 'red',
+  marginTop: 10,
+  textAlign: 'center',
+},
   scrollContent: {
     borderColor: Theme.colors.primary,
     borderWidth: Theme.borders.width.thick,
